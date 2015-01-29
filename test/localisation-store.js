@@ -38,10 +38,6 @@ describe('localisation store', function () {
 
 			});
 
-			it('emits an error', function () {
-				gutil.PluginError.called.should.be.true;
-			});
-
 			it('returns undefined', function() {
 				(actualValue === undefined).should.be.true;
 			})
@@ -53,10 +49,6 @@ describe('localisation store', function () {
 			beforeEach(function () {
 				actualValue = sut.getLocalisedString('missing.title');
 
-			});
-
-			it('emits an error', function () {
-				gutil.PluginError.called.should.be.true;
 			});
 
 			it('returns undefined', function() {
@@ -72,7 +64,7 @@ describe('localisation store', function () {
 
 		beforeEach(function () {
 			gutil.PluginError = sinon.spy();
-			sut = new LocalisationStore({levelTwo: {title: 'levelTwoTitleText'}, text: 'levelOneText'})
+			sut = new LocalisationStore({levelTwo: {title: 'levelTwoTitleText', emptyString: ''}, text: 'levelOneText'})
 		});
 
 		describe('when an exiting value one level deep is requested', function () {
@@ -106,8 +98,16 @@ describe('localisation store', function () {
 				actualValue = sut.getLocalisedString('levelTwo.missing')
 			});
 
-			it('emits an error', function () {
-				gutil.PluginError.called.should.be.true;
+			it('returns undefined', function() {
+				(actualValue === undefined).should.be.true;
+			})
+		});
+
+		describe('when an empty string is requested', function () {
+			var actualValue;
+
+			beforeEach(function () {
+				actualValue = sut.getLocalisedString('levelTwo.emptyString')
 			});
 
 			it('returns undefined', function() {
@@ -120,10 +120,6 @@ describe('localisation store', function () {
 
 			beforeEach(function () {
 				actualValue = sut.getLocalisedString('levelTwo')
-			});
-
-			it('emits an error', function () {
-				gutil.PluginError.called.should.be.true;
 			});
 
 			it('returns undefined', function() {

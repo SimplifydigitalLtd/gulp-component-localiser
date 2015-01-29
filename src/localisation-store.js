@@ -20,12 +20,13 @@ module.exports = function(localisations) {
 			currentObject = currentObject[objectIdentifiers[i]];
 		}
 
-		if (currentObject === undefined || currentObject === null){
-			new gutil.PluginError('gulp-component-localiser', 'requested string: ' + name + ' was not found.');
+		if (currentObject === undefined || currentObject === null || currentObject === ""){
+			//new gutil.PluginError('gulp-component-localiser', 'requested string: ' + name + ' was not found.');
+			return undefined;
 		}
 
 		if (!_.isString(currentObject)) {
-			new gutil.PluginError('gulp-component-localiser', 'requested string: ' + name + ' was not a string. Found value: ' + JSON.stringify(currentObject));
+			//new gutil.PluginError('gulp-component-localiser', 'requested string: ' + name + ' was not a string. Found value: ' + JSON.stringify(currentObject));
 			return undefined;
 		}
 
