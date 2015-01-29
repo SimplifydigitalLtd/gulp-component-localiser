@@ -1,53 +1,51 @@
-(PLUGIN AUTHOR: Please read [Plugin README conventions](https://github.com/wearefractal/gulp/wiki/Plugin-README-Conventions), then delete this line)
-
 # gulp-component-localiser
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]  [![Coverage Status][coveralls-image]][coveralls-url] [![Dependency Status][depstat-image]][depstat-url]
-
 > component-localiser plugin for [gulp](https://github.com/wearefractal/gulp)
 
 ## Usage
 
-First, install `gulp-component-localiser` as a development dependency:
+First, install `gulp-component-localiser` as a development dependency by adding the following devDependency to your packages.json file:
 
 ```shell
-npm install --save-dev gulp-component-localiser
+"gulp-component-localiser" : "git://github.com/SimplifydigitalLtd/gulp-component-localiser.git",
 ```
 
 Then, add it to your `gulpfile.js`:
 
 ```javascript
-var component-localiser = require("gulp-component-localiser");
+var componentLocaliser = require("gulp-component-localiser");
+```
+You can directly insert the translation structure
+```javascript
+var translations = {}
 
 gulp.src("./src/*.ext")
-	.pipe(component-localiser({
-		msg: "Hello Gulp!"
-	}))
+	.pipe(componentLocaliser({translations: translations}))
 	.pipe(gulp.dest("./dist"));
 ```
 
+or provide a path to the file containing the translations
+
+```javascript
+gulp.src("./src/*.ext")
+	.pipe(componentLocaliser({file: '/src/translatons/en.json}))
+	.pipe(gulp.dest("./dist"));
+```
 ## API
 
 ### component-localiser(options)
 
-#### options.msg
+#### options.file
 Type: `String`  
-Default: `Hello World`
+Default: ``
 
-The message you wish to attach to file.
+The path to the file containing the translations to use.
 
+#### options.translations
+Type: `Object`  
+Default: `{}`
+
+The full translation structure to use.
 
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
-
-[npm-url]: https://npmjs.org/package/gulp-component-localiser
-[npm-image]: https://badge.fury.io/js/gulp-component-localiser.png
-
-[travis-url]: http://travis-ci.org/SteveCarratt/gulp-component-localiser
-[travis-image]: https://secure.travis-ci.org/SteveCarratt/gulp-component-localiser.png?branch=master
-
-[coveralls-url]: https://coveralls.io/r/SteveCarratt/gulp-component-localiser
-[coveralls-image]: https://coveralls.io/repos/SteveCarratt/gulp-component-localiser/badge.png
-
-[depstat-url]: https://david-dm.org/SteveCarratt/gulp-component-localiser
-[depstat-image]: https://david-dm.org/SteveCarratt/gulp-component-localiser.png

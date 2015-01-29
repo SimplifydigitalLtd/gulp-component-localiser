@@ -1,19 +1,21 @@
 var through = require("through2"),
 	gutil = require("gulp-util"),
+	fs = require("fs"),
 	ComponentHtmlLocator = require('./src/component-html-locator'),
 	localiseScript = require('./src/script-localiser'),
 	HtmlLocaliser = require('./src/html-replacer'),
 	LocalisationStore = require('./src/localisation-store');
 
-module.exports = function (localisationInfo) {
+module.exports = function (options) {
 	"use strict";
 
 	// if necessary check for required param(s), e.g. options hash, etc.
-	if (!localisationInfo) {
+	if (!options.translations && !options.file) {
 		throw new gutil.PluginError("gulp-component-localiser", "No param supplied");
 	}
 
-	var localisationStore = new LocalisationStore(localisationInfo);
+
+	var localisationStore = options.translations ?  new LocalisationStore(options.translations) : new LocalisationStore(JSON.parse(fs.readFileSync(options.file).toString()));
 	var htmlLocaliser = new HtmlLocaliser(localisationStore);
 
 	// see "Writing a plugin"

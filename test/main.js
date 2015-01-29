@@ -37,7 +37,7 @@ describe("gulp-component-localiser", function () {
 			contents: fs.readFileSync("test/fixtures/main/simple.txt")
 		});
 
-		var stream = componentLocaliser({simple: {title : 'Simple'}});
+		var stream = componentLocaliser({translations:  {simple: {title : 'Simple'}}});
 
 		stream.on("error", function(err) {
 			should.exist(err);
@@ -66,7 +66,7 @@ describe("gulp-component-localiser", function () {
 			contents: fs.readFileSync("test/fixtures/main/complicated.txt")
 		});
 
-		var stream = componentLocaliser({complicated: {newsFeed: {title:'french news feed'}, channels: {title: 'french channels'}}});
+		var stream = componentLocaliser({translations: {complicated: {newsFeed: {title:'french news feed'}, channels: {title: 'french channels'}}}});
 
 		stream.on("error", function(err) {
 			should.exist(err);
@@ -95,7 +95,7 @@ describe("gulp-component-localiser", function () {
 			contents: fs.createReadStream("test/fixtures/main/simple.txt")
 		});
 
-		var stream = componentLocaliser("World");
+		var stream = componentLocaliser({translations: {}});
 
 		stream.on("error", function(err) {
 			should.exist(err);
