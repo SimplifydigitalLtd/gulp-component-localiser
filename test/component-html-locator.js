@@ -12,7 +12,7 @@ var ComponentHtmlLocator = require('../src/component-html-locator'),
 
 require("mocha");
 
-xdescribe('component html locator', function() {
+describe('component html locator', function() {
 	var fixture,
 		sut;
 

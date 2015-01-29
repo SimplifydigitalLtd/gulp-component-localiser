@@ -92,7 +92,7 @@ describe("gulp-component-localiser", function () {
 			path: "test/fixtures/simple.txt",
 			cwd: "test/",
 			base: "test/fixtures",
-			contents: fs.createReadStream("test/fixtures/simple.txt")
+			contents: fs.createReadStream("test/fixtures/main/simple.txt")
 		});
 
 		var stream = componentLocaliser("World");

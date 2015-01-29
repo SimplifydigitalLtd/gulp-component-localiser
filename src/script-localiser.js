@@ -6,7 +6,6 @@ module.exports = function (script, htmlLocator, htmlReplacer) {
 	var modifiedScript = script;
 
 	while (htmlLocator.next()) {
-		console.log(1);
 		var html = modifiedScript.slice(htmlLocator.currentStartIndex, htmlLocator.currentEndIndex);
 
 		var localisedHtml = htmlReplacer.localiseHtml(html);

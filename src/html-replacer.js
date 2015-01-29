@@ -1,26 +1,26 @@
 /**
  * Created by scarratt on 28/01/2015. Modified  by athajudeen on 29/01/2015.
  */
-$ = require('cheerio');
+var cheerio = require('cheerio');
 module.exports = function (localisationStore) {
 
 	var self = this,
-		attributeToFind = "[data-i18n]",
-		attributeValue;
+		attributeToFind = "[data-i18n]";
 
 	self.localiseHtml = function(html) {
 
-		var htmlRepresentation = $(html);
+		var $ = cheerio.load(html, {
+			normalizeWhitespace: false,
+			xmlMode: false
+		});
 
-		var elementsToReplace =   htmlRepresentation.find(attributeToFind).addBack(attributeToFind);
-		console.log(elementsToReplace.length);
+		var elementsToReplace =   $(attributeToFind).addBack(attributeToFind);
 		for (var i = 0; i < elementsToReplace.length; i++) {
 			var $element = $(elementsToReplace[i]);
 
             var attributeValue = $element.data('i18n');
 
 			if (attributeValue === undefined){
-				console.log('attribute value was undefined');
 				continue;
 			}
 
@@ -34,6 +34,6 @@ module.exports = function (localisationStore) {
 		}
 
 
-		return htmlRepresentation.toString();
+		return $.html();
 	};
 };

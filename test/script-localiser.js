@@ -9,7 +9,7 @@ var localiseScript = require('../src/script-localiser'),
 	sinon = require('sinon');
 
 
-xdescribe('Script Localiser', function () {
+describe('Script Localiser', function () {
 	var fixture,
 		localisedScript,
 		htmlLocatorMock,
@@ -19,7 +19,7 @@ xdescribe('Script Localiser', function () {
 	beforeEach(function () {
 		fixture = fs.readFileSync("test/fixtures/script-localiser/simple.txt").toString();
 		htmlLocatorMock = {next: sinon.stub()};
-		htmlReplacer = sinon.stub();
+		htmlReplacer = {localiseHtml: sinon.stub()};
 	});
 
 	describe('when only one match', function() {
@@ -30,17 +30,17 @@ xdescribe('Script Localiser', function () {
 			htmlLocatorMock.currentStartIndex = 1;
 			htmlLocatorMock.currentEndIndex = fixture.length - 2;
 
-			htmlReplacer.returns('in');
+			htmlReplacer.localiseHtml.returns('in');
 
 			localisedScript = localiseScript(fixture, htmlLocatorMock, htmlReplacer)
 		});
 
 		it('calls html replacer', function () {
-			htmlReplacer.calledOnce.should.be.true;
+			htmlReplacer.localiseHtml.calledOnce.should.be.true;
 		});
 
 		it('calls html replacer with correct substring', function() {
-			htmlReplacer.firstCall.args[0].should.eql('ome simple text just for mockin');
+			htmlReplacer.localiseHtml.firstCall.args[0].should.eql('ome simple text just for mockin');
 		});
 
 		it('returns script with matched part replaced with result of html localiser', function() {
@@ -57,7 +57,7 @@ xdescribe('Script Localiser', function () {
 		});
 
 		it('calls html replacer twice', function () {
-			htmlReplacer.calledTwice.should.be.true;
+			htmlReplacer.localiseHtml.calledTwice.should.be.true;
 		});
 	})
 
