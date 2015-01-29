@@ -13,6 +13,7 @@ module.exports = function (jsonTranslation, html, $) {
 		if(!attributeValue){
 			console.log("Warning - \""+attributeToFind+"\" not found: "+html);
 		}
+		console.log("\""+attributeToFind+"\" value: "+attributeValue);
 		return attributeValue;
 	};
 };
