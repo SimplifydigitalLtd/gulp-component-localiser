@@ -9,7 +9,7 @@ var localiseScript = require('../src/script-localiser'),
 	sinon = require('sinon');
 
 
-describe('Script Localiser', function () {
+xdescribe('Script Localiser', function () {
 	var fixture,
 		localisedScript,
 		htmlLocatorMock,
