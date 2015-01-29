@@ -12,7 +12,7 @@ delete require.cache[require.resolve("../")];
 var gutil = require("gulp-util"),
 	componentLocaliser = require("../");
 
-describe("gulp-component-localiser", function () {
+xdescribe("gulp-component-localiser", function () {
 
 	var expectedFile = new gutil.File({
 		path: "test/expected/hello.txt",

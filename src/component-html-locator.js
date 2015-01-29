@@ -15,15 +15,15 @@ module.exports = function (scriptText) {
 			return false;
 		}
 
+		// move index to before start of last match so we don't match it again
 		var indexToSearchFrom = lastMatch ? self.currentStartIndex - (lastMatch.length +1) : self.currentStartIndex ;
 
+		// last index looks backwards through the script so we can replace strings and not worry about interfering with the indexes.
         var startIndex = scriptText.lastIndexOf(match[currentIndex], indexToSearchFrom) + match[currentIndex].length;
 
         self.currentStartIndex = startIndex;
 
-		var endIndex = scriptText.indexOf('\';});', startIndex);
-
-		self.currentEndIndex = endIndex;
+		self.currentEndIndex = scriptText.indexOf('\';});', startIndex);
 
 		lastMatch = match[currentIndex];
 

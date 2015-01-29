@@ -9,9 +9,5 @@ require("mocha");
 
 xdescribe('html replacer', function() {
 
-	it('should return badger', function() {
-		var htmlReplacer = htmlReplace(configFile);
 
-		var localisedHtml = htmlReplace(hmtl);
-	});
 });

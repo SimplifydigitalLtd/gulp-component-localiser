@@ -1,11 +1,14 @@
 var through = require("through2"),
-	gutil = require("gulp-util");
+	gutil = require("gulp-util"),
+	ComponentHtmlLocator = require('./src/component-html-locator'),
+	localiseScript = require('./src/script-localiser'),
+	htmlLocaliser = require('./src/html-replacer');
 
-module.exports = function (param) {
+module.exports = function (localisationInfo) {
 	"use strict";
 
 	// if necessary check for required param(s), e.g. options hash, etc.
-	if (!param) {
+	if (!localisationInfo) {
 		throw new gutil.PluginError("gulp-component-localiser", "No param supplied");
 	}
 
@@ -37,7 +40,12 @@ module.exports = function (param) {
 
 			// manipulate buffer in some way
 			// http://nodejs.org/api/buffer.html
-			file.contents = new Buffer(String(file.contents) + "\n" + param);
+			var script = String(file.contents);
+			var htmlLocator = new ComponentHtmlLocator(script);
+
+			var localisedScript = localiseScript(script, htmlLocator, htmlLocaliser(localisationInfo));
+
+			file.contents = new Buffer(localisedScript);
 
 			this.push(file);
 
