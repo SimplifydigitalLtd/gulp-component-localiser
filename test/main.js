@@ -66,7 +66,7 @@ describe("gulp-component-localiser", function () {
 			contents: fs.readFileSync("test/fixtures/main/complicated.txt")
 		});
 
-		var stream = componentLocaliser({complicated: {newsFeed: {title:'french news feed'}, channels: {title: 'french channels'}};
+		var stream = componentLocaliser({complicated: {newsFeed: {title:'french news feed'}, channels: {title: 'french channels'}}});
 
 		stream.on("error", function(err) {
 			should.exist(err);
