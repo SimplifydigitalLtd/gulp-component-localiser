@@ -25,10 +25,10 @@ describe("gulp-component-localiser", function () {
 		path: "test/expected/simple.txt",
 		cwd: "test/",
 		base: "test/expected",
-		contents: fs.readFileSync("test/fixtures/main/complicated.txt")
+		contents: fs.readFileSync("test/expected/main/complicated.txt")
 	});
 
-	xit("should produce localised file via buffer for a simple case", function (done) {
+	it("should produce localised file via buffer for a simple case", function (done) {
 
 		var srcFile = new gutil.File({
 			path: "test/fixtures/simple.txt",
@@ -57,7 +57,7 @@ describe("gulp-component-localiser", function () {
 		stream.end();
 	});
 
-	xit("should produce localised file via buffer for a complicated case", function (done) {
+	it("should produce localised file via buffer for a complicated case", function (done) {
 
 		var srcFile = new gutil.File({
 			path: "test/fixtures/complicated.txt",

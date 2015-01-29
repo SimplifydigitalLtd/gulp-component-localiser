@@ -18,7 +18,7 @@ describe('localisation store', function () {
 			sut = new LocalisationStore({title: 'titleText'})
 		});
 
-		describe('when an exiting value one level deep is requested', function () {
+		describe('when an existing value one level deep is requested', function () {
 			var actualValue;
 
 			beforeEach(function () {

@@ -2,7 +2,8 @@ var through = require("through2"),
 	gutil = require("gulp-util"),
 	ComponentHtmlLocator = require('./src/component-html-locator'),
 	localiseScript = require('./src/script-localiser'),
-	htmlLocaliser = require('./src/html-replacer');
+	HtmlLocaliser = require('./src/html-replacer'),
+	LocalisationStore = require('./src/localisation-store');
 
 module.exports = function (localisationInfo) {
 	"use strict";
@@ -11,6 +12,9 @@ module.exports = function (localisationInfo) {
 	if (!localisationInfo) {
 		throw new gutil.PluginError("gulp-component-localiser", "No param supplied");
 	}
+
+	var localisationStore = new LocalisationStore(localisationInfo);
+	var htmlLocaliser = new HtmlLocaliser(localisationStore);
 
 	// see "Writing a plugin"
 	// https://github.com/gulpjs/gulp/blob/master/docs/writing-a-plugin/README.md
@@ -43,7 +47,7 @@ module.exports = function (localisationInfo) {
 			var script = String(file.contents);
 			var htmlLocator = new ComponentHtmlLocator(script);
 
-			var localisedScript = localiseScript(script, htmlLocator, htmlLocaliser(localisationInfo));
+            var localisedScript = localiseScript(script, htmlLocator, htmlLocaliser);
 
 			file.contents = new Buffer(localisedScript);
 

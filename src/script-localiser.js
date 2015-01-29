@@ -6,11 +6,12 @@ module.exports = function (script, htmlLocator, htmlReplacer) {
 	var modifiedScript = script;
 
 	while (htmlLocator.next()) {
+		console.log(1);
 		var html = modifiedScript.slice(htmlLocator.currentStartIndex, htmlLocator.currentEndIndex);
 
-		var localisedHtml = htmlReplacer(html);
+		var localisedHtml = htmlReplacer.localiseHtml(html);
 
-		modifiedScript = modifiedScript.replace(html, localisedHtml);
+		modifiedScript = modifiedScript.replace(html,localisedHtml);
 	}
 
 	return modifiedScript;
