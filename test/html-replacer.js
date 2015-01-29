@@ -7,7 +7,7 @@ var htmlReplace = require('../src/html-replacer');
 require("mocha");
 
 
-describe('html replacer', function() {
+xdescribe('html replacer', function() {
 
 	it('should return badger', function() {
 		var htmlReplacer = htmlReplace(configFile);

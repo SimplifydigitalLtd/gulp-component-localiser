@@ -1,0 +1,2 @@
+define('text!components/providers/mobile-info/sd-mobile-info.html',[],function () { return '<h2>mobile-info</h2>\r\n\r\n<p data-bind=\'text: message\'></p>';});
+define('text!components/providers/mobile-info/sd-mobile-info2.html',[],function () { return '<h2>mobile-info</h2>\r\n\r\n<p data-bind=\'text: message\'></p>';});
