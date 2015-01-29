@@ -1,0 +1,100 @@
+define('text!components/providers/industry-info/sd-industry-info.html',[],function () { return '<!--<section id="provider-intelligence-table" class="md-ph-provider-table">\r\n    Provider Intelligence Table\r\n</section>\r\n<section class="mod-ph-news-feed" data-i18n="complicated.newsFeed.title">french news feed</section>-->\r\n<div class="md-rankings"> <!-- TODO: Replace rankings with the proper data -->\r\n    <div class="md-rankings-list">\r\n        <table class="md-rankings-table">\r\n            <tr>\r\n                <td class="md-rank">#1</td>\r\n                <td class="md-brand">\r\n                    <div class="md-logo">\r\n                        <img src="/images/ranking/numericable-86x25.png" alt=""/>\r\n                    </div>\r\n                </td>\r\n                <td class="md-description">Le Très Haut Débit à petit prix! La fibre, 25 chaînes et services TV,\r\n                    téléphonie fixe illimitée.\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td class="md-rank">#2</td>\r\n                <td class="md-brand">\r\n                    <div class="md-logo">\r\n                        <img src="/images/ranking/sfr-40x39.png" alt=""/>\r\n                    </div>\r\n                </td>\r\n                <td class="md-description">Le Très Haut Débit à petit prix! La fibre, 25 chaînes et services TV,\r\n                    téléphonie fixe illimitée.\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td class="md-rank">#3</td>\r\n                <td class="md-brand">\r\n                    <div class="md-logo">\r\n                        <img src="/images/ranking/orange-57x16.png" alt=""/>\r\n                    </div>\r\n                </td>\r\n                <td class="md-description">Le Très Haut Débit à petit prix! La fibre, 25 chaînes et services TV,\r\n                    téléphonie fixe illimitée.\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td class="md-rank">#4</td>\r\n                <td class="md-brand">\r\n                    <div class="md-logo">\r\n                        <img src="/images/ranking/sosh-55x30.png" alt=""/>\r\n                    </div>\r\n                </td>\r\n                <td class="md-description">Le Très Haut Débit à petit prix! La fibre, 25 chaînes et services TV,\r\n                    téléphonie fixe illimitée.\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td class="md-rank">#5</td>\r\n                <td class="md-brand">\r\n                    <div class="md-logo">\r\n                        <img src="/images/ranking/byou-71x20.png" alt=""/>\r\n                    </div>\r\n                </td>\r\n                <td class="md-description">Le Très Haut Débit à petit prix! La fibre, 25 chaînes et services TV,\r\n                    téléphonie fixe illimitée.\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td class="md-rank">#6</td>\r\n                <td class="md-brand">\r\n                    <div class="md-logo">\r\n                        <img src="/images/ranking/bouygues-76x35.png" alt=""/>\r\n                    </div>\r\n                </td>\r\n                <td class="md-description">Le Très Haut Débit à petit prix! La fibre, 25 chaînes et services TV,\r\n                    téléphonie fixe illimitée.\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td class="md-rank">#7</td>\r\n                <td class="md-brand">\r\n                    <div class="md-logo">\r\n                        <img src="/images/ranking/free-77x27.png" alt=""/>\r\n                    </div>\r\n                </td>\r\n                <td class="md-description">Le Très Haut Débit à petit prix! La fibre, 25 chaînes et services TV,\r\n                    téléphonie fixe illimitée.\r\n                </td>\r\n            </tr>\r\n        </table>\r\n    </div>\r\n</div>';});
+
+(function () {
+
+	define('components/providers/industry-info/sd-industry-info',['knockout', 'text!./sd-industry-info.html'], function(ko, templateMarkup) {
+
+		function IndustryInfoViewModel(params) {
+			this.message = ko.observable('Hello from the industry-info component!');
+		}
+
+  	// This runs when the component is torn down. Put here any logic necessary to clean up,
+  	// for example cancelling setTimeouts or disposing Knockout subscriptions/computeds.
+  	IndustryInfoViewModel.prototype.dispose = function() { };
+
+  	return { viewModel: IndustryInfoViewModel, template: templateMarkup };
+  });
+
+}());
+define('text!components/profiling/tv-genere-selector/sd-tv-genere-selector.html',[],function () { return '<!-- Module (Grid): Tv Genre Selector -->\r\n\r\n<div class="mod-tv-genre-selector">\r\n    <h3>Tv Genres</h3>\r\n    <div data-bind="foreach: genres">\r\n        <button class="btn btn-primary" data-bind="text: $data"></button>\r\n    </div>\r\n</div>';});
+
+/**
+ * Created by scarratt on 08/12/2014.
+ */
+
+(function () {
+
+    define('services/odin',['app/app-config'], function (appConfig) {
+        var requestTmpl = {
+            application: appConfig.appName,
+            campaignID: appConfig.campaignID
+        };
+
+        function _search(index, type, query) {
+            var request = requestTmpl;
+            request.query = query;
+            request.context = {
+                index: index,
+                type: type
+            };
+
+            return $.ajax({
+                url: 'http://odin.staging.simplifysystems.co.uk/api/v1/search',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(request)
+            });
+        }
+
+        return {
+            search: function (index, type, queryParms) {
+                return _search(index, type, queryParms);
+            }
+        };
+    });
+}());
+(function () {
+
+	define('components/profiling/tv-genere-selector/sd-tv-genere-selector',['knockout', 'text!./sd-tv-genere-selector.html', 'services/odin'], function(ko, templateMarkup, odin) {
+
+		function TvGenereSelectorViewModel(params) {
+			var self = this;
+			self.genres = ko.observableArray([]);
+			self.selectedGenres = ko.observableArray([]);
+
+
+			function getGenres(){
+				var query = {
+					"aggs": {
+						"genre": {
+							"terms": {
+								"field": "genre",
+								"size" : 0
+							}
+						}
+					}
+
+				};
+
+				var resp = odinService.search('bundles', 'tvchannel',query);
+
+				resp.done(function(data,textStatus, jqXHR){
+					var genres = _.map(data.Results.aggregations.genre.buckets, function(g){
+						return g.key;
+					});
+					self.genres(genres);
+				});
+			}
+
+			getGenres();
+		}
+
+  	// This runs when the component is torn down. Put here any logic necessary to clean up,
+  	// for example cancelling setTimeouts or disposing Knockout subscriptions/computeds.
+  	TvGenereSelectorViewModel.prototype.dispose = function() { };
+
+  	return { viewModel: TvGenereSelectorViewModel, template: templateMarkup };
+  });
+
+}());
+define('text!components/profiling/television/sd-television.html',[],function () { return '<!-- Module (Grid): Television -->\r\n\r\n<div class="mod-grid-television">\r\n    <h1>TV</h1>\r\n\r\n    <h3 data-i18n="profiling.tv.TVChannelsAndBroadcastsEssentials">TV channels and broadcasts essentials</h3>\r\n    <input type="text" data-bind="textInput: channelName">\r\n\r\n    <div class="channel-list" data-bind="foreach: channels">\r\n        <p data-bind="click: $parent.add"><span data-bind="text: name"></span></p>\r\n    </div>\r\n    <h4 data-i18n="complicated.channels.title">french channels</h4>\r\n\r\n    <div class="selected-channels" data-bind="foreach: selectedChannels">\r\n        <p><span data-bind="text: name"></span><i data-bind="click: $parent.remove"\r\n                                                  class="mdi-action-highlight-remove"></i></p>\r\n    </div>\r\n    <sd-television-genre></sd-television-genre>\r\n</div>';});
